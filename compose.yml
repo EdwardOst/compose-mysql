@@ -1,0 +1,33 @@
+# Use root/example as user/password credentials
+services:
+
+  mysql:
+    image: ${MYSQL_IMAGE:-mysql}:${MYSQL_VERSION:-8.0.33}
+    restart: always
+    environment:
+      # This variable is mandatory and specifies the password that will be set for the MySQL root superuser account.
+      MYSQL_ROOT_PASSWORD: qlikroot123
+      # This variable is optional and allows you to specify the name of a database to be created on image startup.
+      # If a user/password was supplied then that user will be granted superuser access (corresponding to GRANT ALL) to this database.
+      MYSQL_DATABASE: qlik
+      # These variables are optional, used in conjunction to create a new user and to set that user's password.
+      # This user will be granted superuser permissions (see above) for the database specified by the MYSQL_DATABASE variable.
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: qlikadmin123
+    expose:
+      - "3306"
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+        host_ip: 127.0.0.1
+    volumes:
+      - db:/var/lib/mysql
+    labels:
+      com.qlik.presales.description: "mysql database service"
+      com.qlik.presales.author: "ed.ost@qlik.com"
+      com.qlik.presales.source: "https://hub.docker.com/_/mysql"
+
+volumes:
+  db:

@@ -1,2 +1,3 @@
 # compose-mysql
-Docker compose for Docker Hub mysql image
+
+Docker compose configuration for the Docker Hub mysql image.

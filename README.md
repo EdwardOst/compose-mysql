@@ -11,3 +11,22 @@ variable values, a shell variable of the same name (lower case), or hardcoded de
 ````bash
 MYSQL_IMAGE=${MYSQL_IMAGE:-${mysql_image:-mysql}}
 ````
+
+### Running Server
+
+To run the mysql server
+
+    docker compose up -d
+
+To run the mysql client
+
+    docker compose --profile client up
+
+The mysql client runs in commandline mode so it needs to be attached.
+
+### Granting Remote Access Rights
+
+Grant permissions to the default user `admin` to login from a remote machine to the default database `qlik`.
+
+ GRANT ALL PRIVILEGES ON qlik to 'admin'@'%';
+ 

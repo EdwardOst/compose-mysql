@@ -19,7 +19,7 @@ services:
       - 3306
     ports:
       # The mysql port exposed on the host is mapped to ip 127.0.0.1 so it should only be visible to the host and not other host network systems.
-      # The published attribute is not specified so a port is dynamically assigned.
+      # If the published attribute is not specified a port will be dynamically assigned.
       - target: 3306
         published: 3306
         host_ip: 127.0.0.1

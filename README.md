@@ -20,7 +20,7 @@ To run the mysql server
 
 To run the mysql client
 
-    docker compose --profile client up
+    docker compose --profile client run mysql_client
 
 The mysql client runs in commandline mode so it needs to be attached.
 

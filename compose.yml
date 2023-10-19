@@ -20,14 +20,14 @@ services:
     ports:
       # The mysql port exposed on the host is mapped to ip 127.0.0.1 so it should only be visible to the host and not other host network systems.
       # If the published attribute is not specified a port will be dynamically assigned.
-      - target: 3306
-        published: 3306
-        host_ip: 127.0.0.1
+      - target: ${MYSQL_CONTAINER_PORT}
+        published: ${MYSQL_HOST_PORT}
+        host_ip: ${MYSQL_HOST_IP}
         protocol: tcp
         mode: host
     volumes:
       # The volume for managing the mysql storage
-      - db:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     labels:
       com.qlik.presales.description: "mysql server"
       com.qlik.presales.author: "ed.ost@qlik.com"
@@ -40,11 +40,9 @@ services:
     environment:
       - MYSQL_USER
       - MYSQL_PASSWORD
-    links:
-      - mysql_server:db
     command:
       - mysql
-      - "-hdb"
+      - "-hmysql_server"
       - "-u${MYSQL_USER}"
       - "-p${MYSQL_PASSWORD}"
     labels:
@@ -54,6 +52,6 @@ services:
   
 
 volumes:
-  db:
+  mysql-data:
     labels:
       com.qlik.presales.description: "mysql database storage"

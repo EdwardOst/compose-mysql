@@ -16,7 +16,7 @@ services:
       - MYSQL_PASSWORD
     expose:
       # The mysql port is exposed by the mysql image to other linked services within the docker network
-      - 3306
+      - ${MYSQL_CONTAINER_PORT}
     ports:
       # The mysql port exposed on the host is mapped to ip 127.0.0.1 so it should only be visible to the host and not other host network systems.
       # If the published attribute is not specified a port will be dynamically assigned.

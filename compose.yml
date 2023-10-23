@@ -44,12 +44,26 @@ services:
       - mysql
       - "-hmysql_server"
       - "-u${MYSQL_USER}"
-      - "-p${MYSQL_PASSWORD}"
+      - "-p"
+#      - "-p${MYSQL_PASSWORD}"
     labels:
       com.qlik.presales.description: "mysql client"
       com.qlik.presales.author: "ed.ost@qlik.com"
       com.qlik.presales.source: "https://hub.docker.com/_/mysql"
-  
+
+  adminer:
+    image: ${ADMINER_IMAGE}:${ADMINER_VERSION}
+    profiles:
+      - admin
+    environment:
+      - ADMINER_DEFAULT_SERVER
+    restart: always
+    ports:
+      - target: ${ADMINER_CONTAINER_PORT}
+        published: ${ADMINER_HOST_PORT}
+        host_ip: ${ADMINER_HOST_IP}
+        protocol: tcp
+        mode: host  
 
 volumes:
   mysql-data:

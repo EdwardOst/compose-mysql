@@ -2,31 +2,28 @@
 
 Docker Compose using the Docker Hub [Mysql](https://hub.docker.com/_/mysql) image.
 
-### Environment Variables
-
-Environment variables referenced in the `compose.yml` file are externalized in the `.env` file.
-All environment variables follow the convention of defaulting to previously existing environment
-variable values, a shell variable of the same name (lower case), or hardcoded default.  For example:
-
-````bash
-MYSQL_IMAGE=${MYSQL_IMAGE:-${mysql_image:-mysql}}
-````
-
 ### Running Server
 
 To run the mysql server
 
     docker compose up -d
 
-To run the mysql client
+To run the mysql client in attached mode
 
-    docker compose --profile client run mysql_client
+    docker compose run --rm mysql_client
 
-The mysql client runs in commandline mode so it needs to be attached.
+To run [adminer](https://hub.docker.com/_/adminer)
+
+    docker compose --profile admin up -d
+
+Adminer (formerly phpMinAdmn) will run on a dynamically assigned port.
+You can get the dymamic port from the docker desktop gui, or use docker inspect:
+
+    docker inspect --format '{{ (index .NetworkSettings.Ports "8080/tcp" 0).HostPort }}' <adminer_container_name>
 
 ### Granting Remote Access Rights
 
-Grant permissions to the default user `admin` to login from a remote machine to the default database `qlik`.
+Grant permissions to a user `user` to login from any remote machine to the a database `db`.
 
- GRANT ALL PRIVILEGES ON qlik to 'admin'@'%';
+ GRANT ALL PRIVILEGES ON db to 'user'@'%';
  
